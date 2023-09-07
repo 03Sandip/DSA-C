@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h> // Include this for exit()
+#include <stdlib.h> 
 #define STACK_SIZE 5
 
 void push(int item, int *top, int s[])
