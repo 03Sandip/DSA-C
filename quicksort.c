@@ -1,68 +1,66 @@
 #include <stdio.h>
-#define max 100
 
-int a[max], n, i, l, h;
 
-void quick_sort(int a[], int l, int h); 
-void main()
+void printArray(int *A, int n)
 {
-    void input(void);
-    input();
-}
-
-void input(void)
-{
-    void quick_sort(int a[], int l, int h); 
-    void output(int a[], int n);
-    printf("How many elements in the array -- ");
-    scanf("%d", &n);
-    printf("\n");
-    printf("Enter the elements : \n"); 
-    for (i = 0; i < n; i++) 
+    for (int i = 0; i < n; i++)
     {
-        scanf("%d", &a[i]);
+        printf("%d ", A[i]);
     }
-    l = 0;
-    h = n - 1;
-    quick_sort(a, l, h); 
-    printf("Sorted Array -- \n");
-    output(a, n);
+    printf("\n");
 }
 
-void quick_sort(int a[], int l, int h)
+int partition(int A[], int low, int high)
 {
-    int temp, key, low, high;
-    low = l;
-    high = h;
-    key = a[(low + high) / 2];
+    int pivot = A[low];
+    int i = low + 1;
+    int j = high;
+    int temp;
+
     do
     {
-        while (key > a[low])
+        while (A[i] <= pivot)
         {
-            low++;
+            i++;
         }
 
-        while (key < a[high])
+        while (A[j] > pivot)
         {
-            high--;
+            j--;
         }
-        if (low <= high)
+
+        if (i < j)
         {
-            temp = a[low];
-            a[low++] = a[high];
-            a[high--] = temp;
+            temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
         }
-    } while (low <= high);
-    if (l < high)
-        quick_sort(a, l, high);
-    if (low < h) 
-        quick_sort(a, low, h); 
+    } while (i < j);
+    temp = A[low];
+    A[low] = A[j];
+    A[j] = temp;
+    return j;
 }
 
-void output(int a[], int n)
+void quickSort(int A[], int low, int high)
 {
-    for (i = 0; i < n; i++) 
+    int partitionIndex; 
+
+    if (low < high)
     {
-        printf("%d\n", a[i]);
+        partitionIndex = partition(A, low, high); 
+        quickSort(A, low, partitionIndex - 1); 
+        quickSort(A, partitionIndex + 1, high);
     }
+}
+
+int main()
+{
+    int A[] = {9, 4, 4, 8, 7, 5, 6};
+    int n = 9;
+    n =7;
+    printArray(A, n);
+    quickSort(A, 0, n - 1);
+    printArray(A, n);
+    return 0;
 }
