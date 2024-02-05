@@ -35,7 +35,7 @@ int partition(int A[], int low, int high)
             A[i] = A[j];
             A[j] = temp;
         }
-    } while (i < j);
+    } while (i <= j);
     temp = A[low];
     A[low] = A[j];
     A[j] = temp;
