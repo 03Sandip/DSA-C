@@ -1,0 +1,12 @@
+1 - Initialisation 
+    Set I = 0
+2 - Repeat 3 to 5 until I < N
+3 - Set J = 0
+4 - Repeat 5 ultil J < N-i-1
+5 - if A [j] = A[J+1 ]
+     Set temp = a[j]
+        a[ j ] = a [j + 1]
+       a[j + 1] = temp 
+      End if
+6 - Exit 
+
