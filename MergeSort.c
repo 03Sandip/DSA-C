@@ -1,76 +1,72 @@
 #include <stdio.h>
 
-#define NUM_ITEMS 5
+void merge(int arr[], int left, int mid, int right) {
+    int i, j, k;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-void merge(int numbers[], int temp[], int left, int mid, int right);
-void m_sort(int numbers[], int temp[], int left, int right);
-void mergesort(int numbers[], int temp[], int array_size);
+    int L[n1], R[n2];
 
-int numbers[NUM_ITEMS];
-int temp[NUM_ITEMS];
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+    
+    i = 0;
+    j = 0;
+    k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+       
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
 
 int main() {
-    int i;
-    printf("Enter the Numbers");
-    for (i = 0; i < NUM_ITEMS; i++) {
-        scanf("%d", &numbers[i]);
-    }
-    mergesort(numbers, temp, NUM_ITEMS);
-    printf("Done With Sort\n");
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int size = sizeof(arr) / sizeof(arr[0]);
 
-    for (i = 0; i < NUM_ITEMS; i++) {
-        printf("%d\n", numbers[i]);
-    }
+    printf("Given array is \n");
+    printArray(arr, size);
+
+    mergeSort(arr, 0, size - 1);
+
+    printf("\nSorted array is \n");
+    printArray(arr, size);
 
     return 0;
-}
-
-void mergesort(int numbers[], int temp[], int array_size) {
-    m_sort(numbers, temp, 0, array_size - 1);
-}
-
-void m_sort(int numbers[], int temp[], int left, int right) {
-    int mid;
-    if (right > left) {
-        mid = (right + left) / 2;
-        m_sort(numbers, temp, left, mid);
-        m_sort(numbers, temp, mid + 1, right);
-        merge(numbers, temp, left, mid + 1, right);
-    }
-}
-
-void merge(int numbers[], int temp[], int left, int mid, int right) {
-    int i, left_end, num_elements, tmp_pos;
-    left_end = mid - 1;
-    tmp_pos = left;
-    num_elements = right - left + 1;
-
-    while ((left <= left_end) && (mid <= right)) {
-        if (numbers[left] <= numbers[mid]) {
-            temp[tmp_pos] = numbers[left];
-            tmp_pos = tmp_pos + 1;
-            left = left + 1;
-        } else {
-            temp[tmp_pos] = numbers[mid];
-            tmp_pos = tmp_pos + 1;
-            mid = mid + 1;
-        }
-    }
-
-    while (left <= left_end) {
-        temp[tmp_pos] = numbers[left];
-        left = left + 1;
-        tmp_pos = tmp_pos + 1;
-    }
-
-    while (mid <= right) {
-        temp[tmp_pos] = numbers[mid];
-        mid = mid + 1;
-        tmp_pos = tmp_pos + 1;
-    }
-
-    for (i = 0; i < num_elements; i++) {
-        numbers[right] = temp[right];
-        right = right - 1;
-    }
 }
