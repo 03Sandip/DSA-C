@@ -7,8 +7,6 @@ int MatrixChainOrder(int p[], int n) {
   
     for (i = 1; i < n; i++)
         m[i][i] = 0;
-  
-    // L is chain length.
     for (L = 2; L < n; L++) {
         for (i = 1; i < n - L + 1; i++) {
             j = i + L - 1;
